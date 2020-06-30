@@ -33,7 +33,7 @@ function ElevationScroll(props) {
   })
 }
 const useStyles = makeStyles(theme => ({
-  root: {
+  toolbarMargin: {
     ...theme.mixins.toolbar,
     marginBottom: "1.60em",
     [theme.breakpoints.down("md")]: {
@@ -111,9 +111,9 @@ const useStyles = makeStyles(theme => ({
     borderRadius: "10px"
   },
   drawerItemSelected:{
-    
+    "& .MuiListItemText-root": { 
       opacity:1
- 
+    }
   },
   appbar:{
     zIndex: theme.zIndex.modal +1
@@ -147,66 +147,47 @@ export default function HeadAppbar(props) {
   }
 
   const menuOptions = [
-    { name: "Services", Link: "/services" },
-    { name: "Mobile Apps Development", Link: "/appsdevelopment" },
-    { name: "Website Development", Link: "/websitedevelopment" }
+    { name: "Services", Link: "/services", activeIndex: 4, selectedIndex:0 },
+    { name: "Mobile Apps Development", Link: "/appsdevelopment" ,activeIndex: 4, selectedIndex:1},
+    { name: "Website Development", Link: "/websitedevelopment" ,activeIndex: 4, selectedIndex:2}
+  ]
+
+  const routes =[
+    {name:"Home", Link:"/", activeIndex:0}, 
+     {name:"About Me", Link:"/about" , activeIndex:1}, 
+      {name:"Projects", Link:"/projects" , activeIndex:2}, 
+       {name:"Contact", Link:"/contact" , activeIndex:3}, 
+        {name:"Services", Link:"/services" , activeIndex:4, ariaControls:"simple-menu", ariaHaspopup:"true", mouseOver: event => handleClick(event) }
   ]
 
   useEffect(() => {
-    switch (window.location.pathname) {
-      case "/":
-        if (value !== 0) {
-          setValue(0)
-        }
-        break
-      case "/about":
-        if (value !== 1) {
-          setValue(1)
-        }
-        break
-      case "/projects":
-        if (value !== 2) {
-          setValue(2)
-        }
-        break
-      case "/contact":
-        if (value !== 3) {
-          setValue(3)
-        }
-        break
-      case "/services":
-        if (value !== 4) {
-          setValue(4)
-        }
-        break
-      case "/appsdevelopment":
-        if (value !== 4) {
-          setValue(4)
-        }
-        break
-      case "/websitedevelopment":
-        if (value !== 4) {
-          setValue(4)
-        }
-        break
-      case "/hireme":
-        if (value !== 5) {
-          setValue(5)
-        }
-        break
-      default:
-        break
-    }
-  }, [value])
+    [...menuOptions, ...routes].forEach (route => {
+      switch(window.location.pathname){
+        case `${route.Link}`:
+          if(value!==route.activeIndex){
+            setValue(route.activeIndex)
+            if(route.selectedIndex && route.selectedIndex !==selectedIndex){
+              setSelectedIndex(route.selectedIndex)
+            }
+          }
+          break;
+          default:
+            break;
+      }
+    })}, [value, menuOptions, selectedIndex, routes]);
+
+
+    
 
   const tabs = (
     <>
-      <Tabs value={value} onChange={handleChange} className={classes.tabContainer} indicatorColor="primary">
-        <Tab className={classes.tab} component={Link} to="/" label="Home" />
-        <Tab className={classes.tab} component={Link} to="/about" label="About Me" />
-        <Tab className={classes.tab} component={Link} to="/projects" label="Projects" />
-        <Tab className={classes.tab} component={Link} to="/contact" label="Contact" />
-        <Tab aria-controls="simple-menu" aria-haspopup="true" onMouseOver={handleClick} className={classes.tab} component={Link} to="/services" label="Services" />
+      <Tabs value={value} onChange={handleChange} className={classes.tabContainer} indicatorColor="primary" >
+
+        {routes.map((route, index) => (
+          <Tab key= {`${route} ${index}`}   className={classes.tab} component={Link} to={route.Link} label={route.name} aria-controls={route.ariaControls}
+          aria-haspopup={route.ariaHaspopup} onMouseOver={route.mouseOver}/>
+        ))}
+        
       </Tabs>
 
       <Button className={classes.button} variant="contained" color="secondary">
@@ -217,7 +198,7 @@ export default function HeadAppbar(props) {
         keepMounted >
         {menuOptions.map((option, i) => (
           <MenuItem
-            key={option}
+            key={`${option} ${i}`}
             component={Link}
             to={option.Link}
             classes={{ root: classes.menuItem }}
@@ -238,84 +219,21 @@ export default function HeadAppbar(props) {
     <React.Fragment>
       <SwipeableDrawer disableBackdropTransition={!iOS} disableDiscovery={iOS} open={openDrawer} onClose={() => setOpenDrawer(false)} onOpen={() => setOpenDrawer(true)} classes={{ paper: classes.drawer }}>
         
-      <div className={classes.root} />
+      <div className={classes.toolbarMargin} />
 
         <List disablePadding>
-          <ListItem
-            onClick={() => {
-              setOpenDrawer(false)
-              setValue(0)
-            }}
-            divider
-            button
-            component={Link}
-            to="/"
-            selected={value === 0}
-          >
-            <ListItemText className={value===0 ? [classes.drawerItem, classes.drawerItemSelected]: classes.drawerItem} disableTypography>
-              Home
-            </ListItemText>
-          </ListItem>
-          <ListItem
-            onClick={() => {
-              setOpenDrawer(false)
-              setValue(1)
-            }}
-            divider
-            button
-            component={Link}
-            to="/about"
-            selected={value === 1}
-          >
-            <ListItemText className={value===1 ? [classes.drawerItem, classes.drawerItemSelected]: classes.drawerItem} disableTypography>
-              About Me
-            </ListItemText>
-          </ListItem>
-          <ListItem
-            onClick={() => {
-              setOpenDrawer(false)
-              setValue(2)
-            }}
-            divider
-            button
-            component={Link}
-            to="/projects"
-            selected={value === 2}
-          >
-            <ListItemText className={value===2 ? [classes.drawerItem, classes.drawerItemSelected]: classes.drawerItem} disableTypography>
-              Projects
-            </ListItemText>
-          </ListItem>
-          <ListItem
-            onClick={() => {
-              setOpenDrawer(false)
-              setValue(3)
-            }}
-            divider
-            button
-            component={Link}
-            to="/contact"
-            selected={value === 3}
-          >
-            <ListItemText className={value===3 ? [classes.drawerItem, classes.drawerItemSelected]: classes.drawerItem} disableTypography>
-              Contact
-            </ListItemText>
-          </ListItem>
-          <ListItem
-            onClick={() => {
-              setOpenDrawer(false)
-              setValue(4)
-            }}
-            divider
-            button
-            component={Link}
-            to="/services"
-            selected={value === 4}
-          >
-            <ListItemText className={value===4 ? [classes.drawerItem, classes.drawerItemSelected]: classes.drawerItem} disableTypography>
-              Services
-            </ListItemText>
-          </ListItem>
+{routes.map(route => (
+  <ListItem key={`${route} ${route.activeIndex}`}
+  onClick={() => { setOpenDrawer(false); setValue(route.activeIndex)}}
+   divider button component={Link} to = {route.Link}  selected={value===route.activeIndex} 
+   classes={{selected:classes.drawerItemSelected}}
+  >
+    <ListItemText className={classes.drawerItem}  disableTypography> {route.name}
+
+    </ListItemText>
+  </ListItem>
+))}
+
           <ListItem
             className={classes.drawerItemHireMe}
             onClick={() => {
@@ -325,6 +243,7 @@ export default function HeadAppbar(props) {
             divider
             button
             component={Link}
+            classes={{root:classes.drawerItemHireMe , selected: classes.drawerItemSelected}}
             to="/hireme"
             selected={value === 5}
           >
@@ -353,7 +272,7 @@ export default function HeadAppbar(props) {
           </Toolbar>
         </AppBar>
       </ElevationScroll>
-      <div className={classes.root} />
+      <div className={classes.toolbarMargin} />
     </>
   )
 }
