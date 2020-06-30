@@ -111,8 +111,14 @@ const useStyles = makeStyles(theme => ({
     borderRadius: "10px"
   },
   drawerItemSelected:{
-    opacity:1
+    
+      opacity:1
+ 
+  },
+  appbar:{
+    zIndex: theme.zIndex.modal +1
   }
+ 
 }))
 
 export default function HeadAppbar(props) {
@@ -206,7 +212,9 @@ export default function HeadAppbar(props) {
       <Button className={classes.button} variant="contained" color="secondary">
         Hire Me
       </Button>
-      <Menu id="simple-menu" anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose} MenuListProps={{ onMouseLeave: handleClose }} classes={{ paper: classes.menu }} elevation={0}>
+      <Menu id="simple-menu" anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose} MenuListProps={{ onMouseLeave: handleClose }} classes={{ paper: classes.menu }} elevation={0}
+        style={{zIndex: 1302}}
+        keepMounted >
         {menuOptions.map((option, i) => (
           <MenuItem
             key={option}
@@ -229,6 +237,9 @@ export default function HeadAppbar(props) {
   const drawer = (
     <React.Fragment>
       <SwipeableDrawer disableBackdropTransition={!iOS} disableDiscovery={iOS} open={openDrawer} onClose={() => setOpenDrawer(false)} onOpen={() => setOpenDrawer(true)} classes={{ paper: classes.drawer }}>
+        
+      <div className={classes.root} />
+
         <List disablePadding>
           <ListItem
             onClick={() => {
@@ -332,7 +343,7 @@ export default function HeadAppbar(props) {
   return (
     <>
       <ElevationScroll>
-        <AppBar position="fixed" color="primary">
+        <AppBar   className={classes.appbar}>
           <Toolbar disableGutters>
             <Button component={Link} to="/" className={classes.logoContainer} onClick={() => setValue(0)}>
               <img className={classes.logo} alt="Portfolio logo" src={logo} />
