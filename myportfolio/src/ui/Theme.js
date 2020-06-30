@@ -6,7 +6,7 @@ const myOrange = "#ffab40"
 export default createMuiTheme({
   palette: {
     common: {
-      blue: `${myGreen}`,
+      green: `${myGreen}`,
       orange: `${myOrange}`
     },
     primary: {
