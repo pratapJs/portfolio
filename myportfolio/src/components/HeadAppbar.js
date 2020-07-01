@@ -126,18 +126,18 @@ export default function HeadAppbar(props) {
   const theme = useTheme()
   const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent)
   const matches = useMediaQuery(theme.breakpoints.down("md"))
-  const [value, setValue] = useState(0)
+ 
   const [anchorEl, setAnchorEl] = useState(null)
-  const [selectedIndex, setSelectedIndex] = useState(0)
+ 
   const [openDrawer, setOpenDrawer] = useState(false)
 
   const handleMenuItemClick = (e, i) => {
-    setSelectedIndex(i)
+    props.setSelectedIndex(i)
     setAnchorEl(null)
   }
 
   const handleChange = (e, newValue) => {
-    setValue(newValue)
+    props.setValue(newValue)
   }
   const handleClick = e => {
     setAnchorEl(e.currentTarget)
@@ -164,24 +164,24 @@ export default function HeadAppbar(props) {
     [...menuOptions, ...routes].forEach (route => {
       switch(window.location.pathname){
         case `${route.Link}`:
-          if(value!==route.activeIndex){
-            setValue(route.activeIndex)
-            if(route.selectedIndex && route.selectedIndex !==selectedIndex){
-              setSelectedIndex(route.selectedIndex)
+          if(props.value!==route.activeIndex){
+            props.setValue(route.activeIndex)
+            if(route.selectedIndex && route.selectedIndex !==props.selectedIndex){
+              props.setSelectedIndex(route.selectedIndex)
             }
           }
           break;
           default:
             break;
       }
-    })}, [value, menuOptions, selectedIndex, routes]);
+    })}, [props.value, menuOptions, props.selectedIndex, routes,props]);
 
 
     
 
   const tabs = (
     <>
-      <Tabs value={value} onChange={handleChange} className={classes.tabContainer} indicatorColor="primary" >
+      <Tabs value={props.value} onChange={handleChange} className={classes.tabContainer} indicatorColor="primary" >
 
         {routes.map((route, index) => (
           <Tab key= {`${route} ${index}`}   className={classes.tab} component={Link} to={route.Link} label={route.name} aria-controls={route.ariaControls}
@@ -204,10 +204,10 @@ export default function HeadAppbar(props) {
             classes={{ root: classes.menuItem }}
             onClick={event => {
               handleMenuItemClick(event, i)
-              setValue(4)
+              props.setValue(4)
               handleClose()
             }}
-            selected={i === selectedIndex}
+            selected={i === props.selectedIndex}
           >
             {option.name}
           </MenuItem>
@@ -224,8 +224,8 @@ export default function HeadAppbar(props) {
         <List disablePadding>
 {routes.map(route => (
   <ListItem key={`${route} ${route.activeIndex}`}
-  onClick={() => { setOpenDrawer(false); setValue(route.activeIndex)}}
-   divider button component={Link} to = {route.Link}  selected={value===route.activeIndex} 
+  onClick={() => { setOpenDrawer(false); props.setValue(route.activeIndex)}}
+   divider button component={Link} to = {route.Link}  selected={props.value===route.activeIndex} 
    classes={{selected:classes.drawerItemSelected}}
   >
     <ListItemText className={classes.drawerItem}  disableTypography> {route.name}
@@ -238,14 +238,14 @@ export default function HeadAppbar(props) {
             className={classes.drawerItemHireMe}
             onClick={() => {
               setOpenDrawer(false)
-              setValue(5)
+              props.setValue(5)
             }}
             divider
             button
             component={Link}
             classes={{root:classes.drawerItemHireMe , selected: classes.drawerItemSelected}}
             to="/hireme"
-            selected={value === 5}
+            selected={props.value === 5}
           >
             <ListItemText className={classes.drawerItem} disableTypography>
               Hire Me
@@ -264,7 +264,7 @@ export default function HeadAppbar(props) {
       <ElevationScroll>
         <AppBar   className={classes.appbar}>
           <Toolbar disableGutters>
-            <Button component={Link} to="/" className={classes.logoContainer} onClick={() => setValue(0)}>
+            <Button component={Link} to="/" className={classes.logoContainer} onClick={() => props.setValue(0)}>
               <img className={classes.logo} alt="Portfolio logo" src={logo} />
             </Button>
 
