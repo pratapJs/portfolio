@@ -26,6 +26,13 @@ export default createMuiTheme({
       fontFamily: "Pacifico",
       fontSize: "1rem",
       textTransform: "none"
+    },
+    h2: {
+      fontFamily: "Raleway",
+      fontWeight:700,
+      fontSize: "2.5rem",
+      color:`${myGreen}`,
+      lineHeight:"1.5"
     }
   }
 })

@@ -85,7 +85,10 @@ const useStyles = makeStyles(theme => ({
     borderRadius: "50px",
     marginLeft: "50px",
     marginRight: "25px",
-    color: "white"
+    color: "white",
+    "&:hover":{
+      backgroundColor: theme.palette.secondary.light
+  }
   },
   drawerIconContainer: {
     marginLeft: "auto",
