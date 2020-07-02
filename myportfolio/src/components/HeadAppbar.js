@@ -151,7 +151,7 @@ export default function HeadAppbar(props) {
 
   const menuOptions = [
     { name: "Services", Link: "/services", activeIndex: 4, selectedIndex:0 },
-    { name: "Mobile Apps Development", Link: "/appsdevelopment" ,activeIndex: 4, selectedIndex:1},
+    { name: "IOS/Android App Development", Link: "/appsdevelopment" ,activeIndex: 4, selectedIndex:1},
     { name: "Website Development", Link: "/websitedevelopment" ,activeIndex: 4, selectedIndex:2}
   ]
 
