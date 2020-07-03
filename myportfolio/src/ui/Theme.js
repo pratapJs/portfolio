@@ -1,5 +1,4 @@
 import { createMuiTheme } from "@material-ui/core/styles"
-import { green } from "@material-ui/core/colors"
 
 const myGreen = "#00897b"
 const myOrange = "#ffab40"
@@ -8,7 +7,7 @@ const myGrey ="#868686"
 export default createMuiTheme({
   palette: {
     common: {
-      green: `${myGreen}`,
+   green: `${myGreen}`,  
       orange: `${myOrange}`
     },
     primary: {
@@ -53,11 +52,19 @@ export default createMuiTheme({
        fontWeight:300,
        color:`${myGrey}`
      },
+
+     subtitle2:{
+color:"white",
+fontSize:"1.25rem",
+fontWeight:300
+     },
+
+
      learnButton: {
-       borderColor: myGreen,
+       borderColor: `${myGreen}`,
        borderWidth: 2,
        textTransform: "none",
-       color: myGreen,
+       color: `${myGreen}`,
        borderRadius:50,
        fontFamily:"Roboto",
        fontWeight: "bold"
