@@ -16,7 +16,7 @@ function App() {
         <BrowserRouter>
           <HeadAppbar value={value} setValue={setValue} selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} />
           <Switch>
-            <Route exact path="/" component={LandingPage} />
+            <Route exact path="/" render={(props) => <LandingPage {...props} setValue={setValue} setSelectedIndex={setSelectedIndex} />} />
             <Route exact path="/about" component={() => <div> About Me </div>} />
             <Route exact path="/projects" component={() => <div> My Projects </div>} />
             <Route exact path="/contact" component={() => <div> Contact Me </div>} />
