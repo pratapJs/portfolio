@@ -161,6 +161,7 @@ export default function HeadAppbar(props) {
       {name:"Projects", Link:"/projects" , activeIndex:2}, 
        {name:"Contact", Link:"/contact" , activeIndex:3}, 
         {name:"Services", Link:"/services" , activeIndex:4, ariaControls:"simple-menu", ariaHaspopup:"true", mouseOver: event => handleClick(event) }
+      
   ]
 
   useEffect(() => {
@@ -174,6 +175,9 @@ export default function HeadAppbar(props) {
             }
           }
           break;
+          case "/hireme":
+            props.setValue(5);
+            break;
           default:
             break;
       }
@@ -193,8 +197,8 @@ export default function HeadAppbar(props) {
         
       </Tabs>
 
-      <Button className={classes.button} variant="contained" color="secondary">
-        Hire Me
+      <Button component={Link} to="/hireme" className={classes.button} variant="contained" color="secondary" onClick={() => props.setValue(5)}>
+    Hire Me  
       </Button>
       <Menu id="simple-menu" anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose} MenuListProps={{ onMouseLeave: handleClose }} classes={{ paper: classes.menu }} elevation={0}
         style={{zIndex: 1302}}
